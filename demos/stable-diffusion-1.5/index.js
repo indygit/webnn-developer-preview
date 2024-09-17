@@ -728,7 +728,7 @@ async function loadModel(modelName /*:String*/, executionProvider /*:String*/) {
     executionProviders: [
       {
         name: executionProvider,
-        deviceType: Utils.getQueryVariable("device", "gpu")
+        deviceType: Utils.getQueryVariable("device", "npu")
       },
     ],
   };
@@ -932,16 +932,16 @@ async function loadStableDiffusion(executionProvider) {
     error.removeAttribute("class");
     error.innerHTML = "";
 
-    const loadStartTime = performance.now();
-    textEncoderSession = await loadModel("text-encoder", executionProvider);
-    performanceData.loadtime.textencoder = (
-      performance.now() - loadStartTime
-    ).toFixed(2);
-
     const unetLoadStartTime = performance.now();
     unetModelSession = await loadModel("unet", executionProvider);
     performanceData.loadtime.unet = (
       performance.now() - unetLoadStartTime
+    ).toFixed(2);
+
+    const loadStartTime = performance.now();
+    textEncoderSession = await loadModel("text-encoder", executionProvider);
+    performanceData.loadtime.textencoder = (
+      performance.now() - loadStartTime
     ).toFixed(2);
 
     const vaeDecoderLoadStartTime = performance.now();

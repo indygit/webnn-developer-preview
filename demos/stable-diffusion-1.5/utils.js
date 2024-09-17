@@ -295,7 +295,7 @@ export const getSafetyChecker = () => {
 export const webNnStatus = async () => {
   let result = {};
   try {
-    const context = await navigator.ml.createContext();
+    const context = await navigator.ml.createContext({deviceType: 'npu'});
     if (context) {
       try {
         const builder = new MLGraphBuilder(context);
