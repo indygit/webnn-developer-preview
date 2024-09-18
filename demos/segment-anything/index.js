@@ -99,7 +99,7 @@ function getConfig() {
     mode: "none",  
     model: "sam_b",
     provider: "webnn",
-    device: "gpu",
+    device: "npu",
     threads: "1",
     ort: "test"
   };
@@ -513,7 +513,7 @@ async function load_models(models) {
         opt.executionProviders = [
           {
             name: "webnn",
-            deviceType: "gpu",
+            deviceType: "npu",
           },
         ];
         opt.freeDimensionOverrides = {
@@ -615,8 +615,9 @@ async function main() {
 
 async function hasFp16() {
   try {
-    const adapter = await navigator.gpu.requestAdapter();
-    return adapter.features.has("shader-f16");
+    // const adapter = await navigator.gpu.requestAdapter();
+    // return adapter.features.has("shader-f16");
+    return true;
   } catch (e) {
     return false;
   }
@@ -679,7 +680,7 @@ const checkWebNN = async () => {
 const webNnStatus = async () => {
   let result = {};
   try {
-    const context = await navigator.ml.createContext();
+    const context = await navigator.ml.createContext({deviceType: 'npu'});
     if (context) {
       try {
         const builder = new MLGraphBuilder(context);
