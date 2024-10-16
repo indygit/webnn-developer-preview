@@ -728,7 +728,7 @@ async function loadModel(modelName /*:String*/, executionProvider /*:String*/) {
     executionProviders: [
       {
         name: executionProvider,
-        deviceType: Utils.getQueryVariable("device", "npu")
+        deviceType: Utils.getQueryVariable("device", "gpu")
       },
     ],
   };
